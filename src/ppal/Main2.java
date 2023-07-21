@@ -1,14 +1,14 @@
 package ppal;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 import utilidades.ConexionBD;
 
-public class Main {
+public class Main2 {
 
 	public static void main(String[] args) {
 		
@@ -29,14 +29,21 @@ public class Main {
 		System.out.println("Liberando la conexión");
 		
 		// operaciones contra la base de datos....
-		Statement sentencia=null;
+		PreparedStatement sentencia=null;
 		ResultSet resultado = null;
 		try {
-			sentencia = con.createStatement();
 			String consulta= "select codigo, nombre, precio, Codigo_fabricante, canon from producto"
-					+ " where precio>"+precio+" and nombre like '%"+nombre+"%'";
+					+ " where precio>? and nombre like concat('%',?,'%')";
 			System.out.println(consulta);
-			resultado = sentencia.executeQuery(consulta);
+			sentencia = con.prepareStatement(consulta);
+			
+			// establecemos los parámetros
+			sentencia.setDouble(1, precio);
+			sentencia.setString(2, nombre);
+			
+			
+			
+			resultado = sentencia.executeQuery();
 			
 			System.out.println("Código\tNombre\ttPrecio\tCodigo_fabricante\tCanon");
 			System.out.println("------------------------------------------------");

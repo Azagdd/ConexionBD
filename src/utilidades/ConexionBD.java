@@ -9,7 +9,7 @@ public class ConexionBD {
 	// datos de la conexión
 	private static String database="tienda";
 	private static String user="tienda";
-	private static String pass="12345";
+	private static String pass="1234";
 	private static String url="jdbc:mysql://localhost:3306/"+database;
 	
 	// Objeto Connection
